@@ -19,7 +19,7 @@ struct PopupButton: View {
         self.color = switch model.style {
         case .normal: Color("TextColor")
         case .accent: AppSettings.shared.theme.getAccentColor()
-        case .danger: Color(hex: 0xFF4C4C)
+        case .danger: ComponentColors.danger
         }
     }
     
@@ -31,7 +31,14 @@ struct PopupButton: View {
                     RoundedRectangle(cornerRadius: 3)
                         .stroke(color)
                         .background(
-                            Color(hex: 0x000000, alpha: self.isHovered ? 0.1 : 0.0)
+                            Group {
+                                if self.isHovered && AppSettings.shared.useUltraThinMaterial {
+                                    VisualEffectView(material: .menu)
+                                        .opacity(0.25)
+                                } else {
+                                    ComponentColors.black.opacity(self.isHovered ? 0.1 : 0.0)
+                                }
+                            }
                                 .onHover { hovering in
                                     self.isHovered = hovering
                                 }

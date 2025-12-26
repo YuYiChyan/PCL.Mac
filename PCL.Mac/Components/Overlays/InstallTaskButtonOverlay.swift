@@ -22,7 +22,7 @@ struct InstallTaskButtonOverlay: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 20)
-                .foregroundStyle(.white)
+                .foregroundStyle(ComponentColors.iconForeground)
         } onClick: {
             dataManager.router.append(.installing(tasks: tasks))
         }

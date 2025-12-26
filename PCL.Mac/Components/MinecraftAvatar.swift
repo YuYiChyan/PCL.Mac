@@ -63,7 +63,7 @@ fileprivate struct SkinLayerView: View {
                     .resizable()
                     .frame(width: width, height: height)
             } else {
-                Color.clear
+                ComponentColors.transparent
             }
         }
         .onAppear {

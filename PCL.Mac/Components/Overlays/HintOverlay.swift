@@ -56,9 +56,9 @@ fileprivate struct HintComponent: View {
     
     private func getBackgroundColor() -> Color {
         switch hint.type {
-        case .info: Color(hex: 0x0A8EFC)
-        case .finish: Color(hex: 0x1DA01D)
-        case .critical: Color(hex: 0xFF2B00)
+        case .info: ComponentColors.hintInfo
+        case .finish: ComponentColors.hintFinish
+        case .critical: ComponentColors.hintCritical
         }
     }
 }

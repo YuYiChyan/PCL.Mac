@@ -33,15 +33,15 @@ enum PopupType {
     
     func getMaskColor() -> Color {
         switch self {
-        case .normal: Color(hex: 0x000000, alpha: 0.7)
-        case .error: Color(hex: 0x470000, alpha: 0.7)
+        case .normal: ComponentColors.popupMask
+        case .error: ComponentColors.popupErrorMask
         }
     }
     
     func getTextStyle() -> AnyShapeStyle {
         switch self {
         case .normal: AppSettings.shared.theme.getTextStyle()
-        case .error: AnyShapeStyle(Color(hex: 0xF50000))
+        case .error: AnyShapeStyle(ComponentColors.popupErrorText)
         }
     }
 }
@@ -68,10 +68,19 @@ struct PopupOverlay: View, Identifiable, Equatable {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color("MyCardBackgroundColor"))
-                .frame(width: width + 20, height: height + 20)
-                .shadow(color: Color("TextColor"), radius: 2)
+            Group {
+                if AppSettings.shared.useUltraThinMaterial {
+                    VisualEffectView(material: .contentBackground)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .frame(width: width + 20, height: height + 20)
+                        .shadow(color: Color("TextColor"), radius: 2)
+                } else {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color("MyCardBackgroundColor"))
+                        .frame(width: width + 20, height: height + 20)
+                        .shadow(color: Color("TextColor"), radius: 2)
+                }
+            }
             HStack {
                 VStack {
                     Text(model.title)

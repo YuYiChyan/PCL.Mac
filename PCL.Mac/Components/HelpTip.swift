@@ -54,8 +54,15 @@ fileprivate struct TextView: View {
                 .frame(maxWidth: 400)
                 .lineLimit(nil)
                 .background(
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color("MyCardBackgroundColor"))
+                    Group {
+                        if AppSettings.shared.useUltraThinMaterial {
+                            VisualEffectView(material: .contentBackground)
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                        } else {
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(Color("MyCardBackgroundColor"))
+                        }
+                    }
                 )
                 .overlay {
                     RoundedRectangle(cornerRadius: 4)

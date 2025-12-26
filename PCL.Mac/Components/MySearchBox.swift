@@ -28,7 +28,7 @@ struct MySearchBox: View {
                     .frame(width: 16)
                 TextField(text: $query) {
                     Text(placeholder)
-                        .foregroundStyle(Color(hex: 0x8C8C8C))
+                        .foregroundStyle(ComponentColors.searchPlaceholder)
                 }
                 .focused($isFocused)
                 .font(.custom("PCL English", size: 16))

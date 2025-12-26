@@ -29,8 +29,15 @@ struct MyButton: View {
         ZStack {
             RoundedRectangle(cornerRadius: 4)
                 .stroke(self.getForegroundStyle(), lineWidth: 1.3)
-            RoundedRectangle(cornerRadius: 6)
-                .foregroundStyle(isHovered ? AppSettings.shared.theme.getAccentColor().opacity(0.1) : .clear)
+            Group {
+                if isHovered && AppSettings.shared.useUltraThinMaterial {
+                    VisualEffectView(material: .menu)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                } else {
+                    RoundedRectangle(cornerRadius: 6)
+                        .foregroundStyle(isHovered ? AppSettings.shared.theme.getAccentColor().opacity(0.1) : ComponentColors.transparent)
+                }
+            }
             VStack {
                 Spacer()
                 Text(text)
@@ -42,7 +49,7 @@ struct MyButton: View {
                 if let descriptionText = self.descriptionText {
                     Text(descriptionText)
                         .font(.custom("PCL English", size: 12))
-                        .foregroundStyle(Color(hex: 0x9A9A9A))
+                        .foregroundStyle(ComponentColors.descriptionText)
                 }
                 Spacer()
             }
@@ -72,5 +79,5 @@ struct MyButton: View {
 #Preview {
     MyButton(text: "测试") { }
         .padding()
-        .background(Color(hex: 0xC4CEE6))
+        .background(ComponentColors.previewBg1)
 }

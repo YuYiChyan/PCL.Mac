@@ -22,7 +22,7 @@ struct StopGameButtonOverlay: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 20)
-                .foregroundStyle(.white)
+                .foregroundStyle(ComponentColors.iconForeground)
         } onClick: {
             dataManager.launchTask?.cancel()
             dataManager.launchState = nil

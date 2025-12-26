@@ -73,7 +73,7 @@ fileprivate struct RouteView<Content: View>: View {
                     RoundedRectangle(cornerRadius: 5)
                         .foregroundStyle(AnyShapeStyle(AppSettings.shared.theme.getTextStyle()))
                 } else {
-                    Color.clear
+                    ComponentColors.transparent
                 }
             }
             .frame(width: 4, height: indicatorHeight)
@@ -84,7 +84,7 @@ fileprivate struct RouteView<Content: View>: View {
                 .animation(.easeInOut(duration: 0.2), value: dataManager.router.getLast())
             Spacer()
         }
-        .background(isHovered ? AppSettings.shared.theme.getAccentColor().opacity(0.1) : Color.clear)
+        .background(isHovered ? AppSettings.shared.theme.getAccentColor().opacity(0.1) : ComponentColors.transparent)
         .animation(.easeInOut(duration: 0.2), value: isHovered)
         .contentShape(Rectangle())
         .onHover { hover in

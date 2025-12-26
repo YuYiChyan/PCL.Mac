@@ -12,7 +12,7 @@ struct MyTag: View {
     let backgroundColor: Color
     let fontSize: CGFloat
     
-    init(label: String, backgroundColor: Color = .white, fontSize: CGFloat = 14) {
+    init(label: String, backgroundColor: Color = ComponentColors.tagDefault, fontSize: CGFloat = 14) {
         self.label = label
         self.backgroundColor = backgroundColor
         self.fontSize = fontSize

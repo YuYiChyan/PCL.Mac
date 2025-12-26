@@ -13,7 +13,7 @@ struct WindowControlButton: View {
         .resizable()
         .aspectRatio(contentMode: .fit)
         .frame(width: 13)
-        .foregroundStyle(.white)
+        .foregroundStyle(ComponentColors.iconForeground)
         .bold()
     ) {
         NSApplication.shared.terminate(nil)
@@ -24,7 +24,7 @@ struct WindowControlButton: View {
         .resizable()
         .aspectRatio(contentMode: .fit)
         .frame(width: 13)
-        .foregroundStyle(.white)
+        .foregroundStyle(ComponentColors.iconForeground)
         .bold()
     ) {
         NSApplication.shared.windows.first!.miniaturize(nil)
@@ -35,7 +35,7 @@ struct WindowControlButton: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(height: 18)
-            .foregroundStyle(.white)
+            .foregroundStyle(ComponentColors.iconForeground)
             .padding(.top, 3)
     ) {
         if let container = DataManager.shared.router.makeView() as? SubRouteContainer, container.shouldPop() {
@@ -57,10 +57,19 @@ struct WindowControlButton: View {
         self.content = { isHovered in
             view
                 .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(isHovered ? Color(hex: 0xFFFFFF, alpha: 0.17) : Color.clear)
-                        .animation(.easeInOut(duration: 0.2), value: isHovered)
-                        .frame(width: 30, height: 30)
+                    Group {
+                        if isHovered && AppSettings.shared.useUltraThinMaterial {
+                            VisualEffectView(material: .menu)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                                .frame(width: 30, height: 30)
+                                .animation(.easeInOut(duration: 0.2), value: isHovered)
+                        } else {
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(isHovered ? AnyShapeStyle(ComponentColors.hoverMask) : AnyShapeStyle(ComponentColors.transparent))
+                                .animation(.easeInOut(duration: 0.2), value: isHovered)
+                                .frame(width: 30, height: 30)
+                        }
+                    }
                 )
                 .frame(width: 30, height: 30)
         }

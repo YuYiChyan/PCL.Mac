@@ -108,9 +108,17 @@ fileprivate struct PickerMenu<Entry: Hashable>: View {
                 }
             }
             .background {
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(Color("MyCardBackgroundColor"))
-                    .shadow(color: Color("TextColor").opacity(0.2), radius: 4)
+                Group {
+                    if AppSettings.shared.useUltraThinMaterial {
+                        VisualEffectView(material: .contentBackground)
+                            .clipShape(RoundedRectangle(cornerRadius: 4))
+                            .shadow(color: Color("TextColor").opacity(0.2), radius: 4)
+                    } else {
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color("MyCardBackgroundColor"))
+                            .shadow(color: Color("TextColor").opacity(0.2), radius: 4)
+                    }
+                }
             }
             .background {
                 RoundedRectangle(cornerRadius: 4)

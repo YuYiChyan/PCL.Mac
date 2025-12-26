@@ -37,11 +37,11 @@ struct JavaListItemView: View {
                         MyTag(label: String(describing: jvm.architecture), backgroundColor: Color("TagColor"), fontSize: 12)
                         MyTag(label: jvm.callMethod.getDisplayName(), backgroundColor: Color("TagColor"), fontSize: 12)
                     }
-                    .foregroundStyle(Color(hex: 0x8C8C8C))
+                    .foregroundStyle(ComponentColors.mutedText)
                     Text(jvm.executableURL.path)
                         .font(.custom("PCL English", size: 14))
                         .textSelection(.enabled)
-                        .foregroundStyle(Color(hex: 0x8C8C8C))
+                        .foregroundStyle(ComponentColors.mutedText)
                 }
                 Spacer()
                 if jvm.isAddedByUser {

@@ -50,7 +50,16 @@ struct MyComboBoxItemView<Option: Hashable>: View {
                 .font(.custom("PCL English", size: 14))
         }
         .foregroundStyle(isHovered ? AppSettings.shared.theme.getTextStyle() : AnyShapeStyle(Color("TextColor")))
-        .background(Color.clear)
+        .background(
+            Group {
+                if AppSettings.shared.useUltraThinMaterial {
+                    VisualEffectView(material: .contentBackground)
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                } else {
+                    ComponentColors.transparent
+                }
+            }
+        )
         .contentShape(Rectangle())
         .onTapGesture {
             if selection != value {

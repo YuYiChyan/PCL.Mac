@@ -22,8 +22,15 @@ struct MyListItem<Content: View>: View {
         content()
             .contentShape(Rectangle())
             .background(
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(isHovered ? AppSettings.shared.theme.getAccentColor().opacity(0.1) : .clear)
+                Group {
+                    if isHovered && AppSettings.shared.useUltraThinMaterial {
+                        VisualEffectView(material: .selection)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                    } else {
+                        RoundedRectangle(cornerRadius: 5)
+                            .fill(isHovered ? AppSettings.shared.theme.getAccentColor().opacity(0.1) : ComponentColors.transparent)
+                    }
+                }
             )
             .animation(.easeInOut(duration: 0.2), value: self.isHovered)
             .onHover { hover in
@@ -37,7 +44,7 @@ struct MyListItem<Content: View>: View {
                             .frame(width: 4)
                             .offset(x: -4)
                     } else {
-                        Color.clear
+                        ComponentColors.transparent
                     }
                     Spacer()
                 }

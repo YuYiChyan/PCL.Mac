@@ -54,13 +54,7 @@ struct GenericTitleBarView<Content: View>: View {
         }
         .frame(maxWidth: .infinity, maxHeight: 48)
         .background(
-            Group {
-                if AppSettings.shared.useUltraThinMaterial {
-                    VisualEffectView(material: .titlebar)
-                } else {
-                    AppSettings.shared.theme.getStyle()
-                }
-            }
+            AppSettings.shared.theme.getStyle()
         )
     }
 }
@@ -77,13 +71,11 @@ struct TitleBarView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 19)
                         .bold()
-                    MyTag(label: "Mac", backgroundColor: ComponentColors.tagDefault)
+                    MyTag(label: "Mac", backgroundColor: Color(hex: 0x7FA8B8, alpha: 0.45))
                         .foregroundStyle(AppSettings.shared.theme.getTextStyle())
                     if Metadata.isDevelopment {
-                        MyTag(label: "Dev", backgroundColor: .blue)
-                            .foregroundStyle(Color("TextColor"))
-                        MyTag(label: "Dev", backgroundColor: ComponentColors.devTagBackground)
-                            .foregroundStyle(ComponentColors.devTagForeground)
+                        MyTag(label: "Dev", backgroundColor: Color(hex: 0x9BF00B))
+                            .foregroundStyle(Color(hex: 0x343D4A))
                     }
                 }
                 Spacer()
@@ -105,7 +97,7 @@ struct SubviewTitleBarView: View {
                 .padding(.leading, AppSettings.shared.windowControlButtonStyle == .macOS ? 40 : 0)
             Text(dataManager.router.getLast().title)
                 .font(.custom("PCL English", size: 16))
-                .foregroundStyle(ComponentColors.iconForeground)
+                .foregroundStyle(.white)
         }
     }
 }
@@ -138,18 +130,8 @@ struct MenuItemButton: View {
     
     var body: some View {
         ZStack {
-            Group {
-                if dataManager.router.getRoot() == route {
-                    RoundedRectangle(cornerRadius: 13)
-                        .foregroundStyle(ComponentColors.iconForeground)
-                } else if isHovered && AppSettings.shared.useUltraThinMaterial {
-                    VisualEffectView(material: .menu)
-                        .clipShape(RoundedRectangle(cornerRadius: 13))
-                } else {
-                    RoundedRectangle(cornerRadius: 13)
-                        .foregroundStyle(isHovered ? AnyShapeStyle(ComponentColors.hoverMask) : AnyShapeStyle(ComponentColors.transparent))
-                }
-            }
+            RoundedRectangle(cornerRadius: 13)
+                .foregroundStyle(dataManager.router.getRoot() == route ? .white : (isHovered ? Color(hex: 0xFFFFFF, alpha: 0.17) : .clear))
             
             HStack {
                 Image(imageName)
@@ -159,7 +141,7 @@ struct MenuItemButton: View {
                 Text(label)
             }
             .foregroundStyle(dataManager.router.getRoot() == route ?
-                             AnyShapeStyle(AppSettings.shared.theme.getTextStyle()) : AnyShapeStyle(ComponentColors.iconForeground))
+                             AnyShapeStyle(AppSettings.shared.theme.getTextStyle()) : AnyShapeStyle(.white))
         }
         .frame(width: 75, height: 27)
         .animation(.easeInOut(duration: 0.2), value: isHovered)

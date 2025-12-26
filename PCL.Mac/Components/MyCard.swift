@@ -27,12 +27,23 @@ struct BaseCardContainer<Content: View>: View {
             .foregroundStyle(isHovered ? AppSettings.shared.theme.getTextStyle() : .init(Color("TextColor")))
             .padding()
             .background(
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(settings.useUltraThinMaterial ? AnyShapeStyle(.ultraThinMaterial) : .init(Color("MyCardBackgroundColor")))
-                    .shadow(
-                        color: isHovered ? AppSettings.shared.theme.getAccentColor() : .gray,
-                        radius: 2, x: 0.5, y: 0.5
-                    )
+                Group {
+                    if settings.useUltraThinMaterial {
+                        VisualEffectView(material: .contentBackground)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                            .shadow(
+                                color: isHovered ? AppSettings.shared.theme.getAccentColor() : .gray,
+                                radius: 2, x: 0.5, y: 0.5
+                            )
+                    } else {
+                        RoundedRectangle(cornerRadius: 5)
+                            .fill(Color("MyCardBackgroundColor"))
+                            .shadow(
+                                color: isHovered ? AppSettings.shared.theme.getAccentColor() : .gray,
+                                radius: 2, x: 0.5, y: 0.5
+                            )
+                    }
+                }
             )
             .padding(.top, -23)
             .opacity(isAppeared ? 1 : 0)
@@ -100,7 +111,7 @@ struct MyCard<Content: View>: View {
                             .rotationEffect(.degrees(isUnfolded ? 180 : 0), anchor: .center)
                             .foregroundStyle(.primary)
                     }
-                    Color.clear
+                    ComponentColors.transparent
                         .contentShape(Rectangle())
                 }
                 .frame(height: 9)
@@ -117,7 +128,7 @@ struct MyCard<Content: View>: View {
                         .foregroundStyle(Color("TextColor"))
                         .background(
                             GeometryReader { proxy in
-                                Color.clear
+                                ComponentColors.transparent
                                     .preference(key: ContentHeightKey.self, value: proxy.size.height)
                             }
                         )
@@ -295,5 +306,5 @@ struct FixedText: View {
 #Preview {
     SettingsView()
         .padding()
-        .background(Color(hex: 0xC7D9F0))
+        .background(ComponentColors.myCardPreviewBg)
 }
